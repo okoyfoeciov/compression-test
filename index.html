@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebRTC File Transfer with Zstd Compression</title>
+  <meta name="description" content="Peer-to-peer file transfer using WebRTC with optional zstd streaming compression">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🚀 WebRTC File Transfer</h1>
+      <p class="subtitle">Peer-to-peer transfer with Zstd streaming compression</p>
+    </header>
+
+    <main>
+      <!-- Connection Panel -->
+      <section class="panel connection-panel">
+        <h2>📡 Connection</h2>
+        
+        <div class="connection-controls">
+          <div class="control-group">
+            <button id="createOfferBtn" class="btn btn-primary">Create Offer (Sender)</button>
+            <button id="createAnswerBtn" class="btn btn-secondary">Create Answer (Receiver)</button>
+          </div>
+          
+          <div class="sdp-exchange">
+            <div class="sdp-box">
+              <label for="localSdp">Local SDP (copy this):</label>
+              <textarea id="localSdp" readonly placeholder="Your SDP will appear here..."></textarea>
+              <button id="copyLocalSdp" class="btn btn-small">📋 Copy</button>
+            </div>
+            
+            <div class="sdp-box">
+              <label for="remoteSdp">Remote SDP (paste here):</label>
+              <textarea id="remoteSdp" placeholder="Paste the other peer's SDP here..."></textarea>
+              <button id="setRemoteSdp" class="btn btn-small btn-primary">✓ Set Remote</button>
+            </div>
+          </div>
+          
+          <div class="connection-status">
+            <span class="status-indicator" id="statusIndicator"></span>
+            <span id="connectionStatus">Disconnected</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- File Transfer Panel -->
+      <section class="panel transfer-panel">
+        <h2>📁 File Transfer</h2>
+        
+        <div class="transfer-controls">
+          <div class="compression-toggle">
+            <label class="toggle-label">
+              <input type="checkbox" id="compressionToggle" checked>
+              <span class="toggle-slider"></span>
+              <span class="toggle-text">Zstd Compression</span>
+            </label>
+            <span class="compression-level">Level: <select id="compressionLevel">
+              <option value="1">1 (Fastest)</option>
+              <option value="3" selected>3 (Default)</option>
+              <option value="5">5 (Better)</option>
+              <option value="9">9 (Best)</option>
+            </select></span>
+          </div>
+          
+          <div class="file-input-wrapper">
+            <input type="file" id="fileInput" class="file-input">
+            <label for="fileInput" class="file-label">
+              <span class="file-icon">📄</span>
+              <span class="file-text" id="fileText">Choose a file to send...</span>
+            </label>
+          </div>
+          
+          <button id="sendFileBtn" class="btn btn-primary btn-large" disabled>
+            🚀 Send File
+          </button>
+          
+          <div class="progress-container" id="progressContainer" style="display: none;">
+            <div class="progress-bar">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text">
+              <span id="progressPercent">0%</span>
+              <span id="progressSize">0 / 0 KB</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="received-files" id="receivedFiles" style="display: none;">
+          <h3>📥 Received Files</h3>
+          <div id="fileList"></div>
+        </div>
+      </section>
+
+      <!-- Benchmark Panel -->
+      <section class="panel benchmark-panel">
+        <h2>📊 Benchmark Logs</h2>
+        
+        <div class="benchmark-stats" id="benchmarkStats">
+          <div class="stat-card">
+            <span class="stat-label">Transfer Time</span>
+            <span class="stat-value" id="statTransferTime">--</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Compression Time</span>
+            <span class="stat-value" id="statCompressionTime">--</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Compression Ratio</span>
+            <span class="stat-value" id="statCompressionRatio">--</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Throughput</span>
+            <span class="stat-value" id="statThroughput">--</span>
+          </div>
+        </div>
+        
+        <div class="log-container">
+          <div class="log-header">
+            <span>Live Logs</span>
+            <button id="clearLogs" class="btn btn-small">🗑️ Clear</button>
+          </div>
+          <pre id="logOutput" class="log-output"></pre>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Open this page in two browser tabs to test peer-to-peer transfer</p>
+    </footer>
+  </div>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>
