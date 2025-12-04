@@ -349,7 +349,7 @@ async function sendFile() {
             benchmark.compressedSize += result.data.length;
 
             const ratio = chunk.byteLength / result.data.length;
-            compressionRatioText = ` → ${formatBytes(result.data.length)} (${ratio.toFixed(1)}x) [compress: ${result.time.toFixed(1)}ms]`;
+            compressionRatioText = ` → ${formatBytes(result.data.length)} (${ratio.toFixed(4)}x) [compress: ${result.time.toFixed(1)}ms]`;
         } else {
             benchmark.compressedSize += chunk.byteLength;
         }
@@ -531,13 +531,13 @@ function logTransferStats(direction) {
     log(`Network time: ${networkTime.toFixed(0)}ms`);
     log(`Original: ${formatBytes(benchmark.originalSize)}`);
     log(`Transferred: ${formatBytes(benchmark.compressedSize)}`);
-    log(`Ratio: ${ratio.toFixed(2)}x`);
+    log(`Ratio: ${ratio.toFixed(4)}x`);
     log(`Throughput: ${formatBytes(throughput)}/s`);
 
     // Update stats cards
     elements.statTransferTime.textContent = `${totalTime.toFixed(0)}ms`;
     elements.statCompressionTime.textContent = `${(benchmark.compressionTime + benchmark.decompressionTime).toFixed(0)}ms`;
-    elements.statCompressionRatio.textContent = `${ratio.toFixed(2)}x`;
+    elements.statCompressionRatio.textContent = `${ratio.toFixed(4)}x`;
     elements.statThroughput.textContent = `${formatBytes(throughput)}/s`;
 }
 
